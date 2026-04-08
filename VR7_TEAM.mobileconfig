@@ -11,7 +11,7 @@
         <key>Label</key>
         <string>VR7 and Ako tool</string>
         <key>PayloadDisplayName</key>
-        <string>VR7 TEAM</string>
+        <string>VR7 and ako</string>
         <key>PayloadIdentifier</key>
         <string>com.vr7ako.webclip</string>
         <key>PayloadType</key>
@@ -23,7 +23,7 @@
         <key>Precomposed</key>
         <true/>
         <key>URL</key>
-        <string>https://vr7teamios.netlify.app/</string>
+        <string>https://vr7-ako.netlify.app/</string>
         <key>IsRemovable</key>
         <true/>
         <key>Icon</key>
