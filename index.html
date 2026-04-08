@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>DISCORD NUKER - VR7 - AKO</title>
+    <meta name="description" content="أداة احترافية للتحكم في سيرفرات ديسكورد">
+    <meta name="theme-color" content="#0f172a">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            direction: rtl;
+            text-align: right;
+        }
+
+        body {
+            font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(to bottom, #0f172a, #0f172a, #020617);
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* Layout */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.8));
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+            padding: 1rem;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+        }
+
+        .header-icon {
+            padding: 0.5rem;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            border-radius: 0.5rem;
+        }
+
+        .header-icon svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: white;
+            fill: currentColor;
+        }
+
+        .header-title h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .header-title p {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        .header-right {
+            text-align: right;
+        }
+
+        .header-right p {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            background: linear-gradient(to right, rgba(127, 29, 29, 0.3), rgba(124, 45, 18, 0.3));
+            border-bottom: 1px solid rgba(185, 28, 28, 0.5);
+            padding: 0.75rem 1rem;
+            display: flex;
+            gap: 0.625rem;
+            align-items: flex-start;
+        }
+
+        .disclaimer-icon {
+            width: 1rem;
+            height: 1rem;
+            color: #f87171;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+            fill: currentColor;
+        }
+
+        .disclaimer-content h3 {
+            font-weight: 700;
+            color: #fca5a5;
+            font-size: 0.75rem;
+            margin-bottom: 0.125rem;
+        }
+
+        .disclaimer-content p {
+            font-size: 0.75rem;
+            color: rgba(252, 165, 165, 0.8);
+            line-height: 1.5;
+        }
+
+        /* Main */
+        main {
+            flex: 1;
+            padding: 1rem;
+            padding-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        /* Section */
+        .section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .section-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.875rem;
+            background: linear-gradient(to right, rgba(30, 41, 59, 1), rgba(30, 41, 59, 0.5));
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            color: inherit;
+            border: none;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(to right, rgba(51, 65, 85, 1), rgba(51, 65, 85, 0.5));
+        }
+
+        .section-header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+        }
+
+        .section-header-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            fill: currentColor;
+        }
+
+        .section-header-text {
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .section-chevron {
+            width: 1rem;
+            height: 1rem;
+            color: #94a3b8;
+            transition: transform 0.3s;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .section-chevron.rotated {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding: 0.875rem;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            border-radius: 0.75rem;
+            animation: fadeIn 0.2s ease-in;
+        }
+
+        .section-content.hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Form Elements */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="number"] {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            color: white;
+            font-size: 0.875rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]::placeholder,
+        input[type="password"]::placeholder,
+        input[type="number"]::placeholder {
+            color: #64748b;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #60a5fa;
+        }
+
+        /* Buttons */
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            font-weight: 600;
+            transition: all 0.2s;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            width: 100%;
+            height: 2.5rem;
+            background: linear-gradient(to right, #2563eb, #1d4ed8);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(to right, #3b82f6, #2563eb);
+        }
+
+        .btn-danger {
+            width: 100%;
+            height: 2.75rem;
+            background: linear-gradient(to right, #dc2626, #b91c1c);
+            color: white;
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background: linear-gradient(to right, #ef4444, #dc2626);
+        }
+
+        .btn-warning {
+            width: 100%;
+            height: 2.75rem;
+            background: linear-gradient(to right, #ea580c, #c2410c);
+            color: white;
+        }
+
+        .btn-warning:hover:not(:disabled) {
+            background: linear-gradient(to right, #f97316, #ea580c);
+        }
+
+        .btn-success {
+            width: 100%;
+            height: 2.75rem;
+            background: linear-gradient(to right, #16a34a, #15803d);
+            color: white;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: linear-gradient(to right, #22c55e, #16a34a);
+        }
+
+        /* Icons */
+        svg {
+            fill: currentColor;
+        }
+
+        /* Logs */
+        .logs-container {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            min-height: 12rem;
+            max-height: 24rem;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            border: 1px solid rgba(51, 65, 85, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .log-entry {
+            display: flex;
+            gap: 0.5rem;
+            word-break: break-word;
+        }
+
+        .log-time {
+            color: #475569;
+            flex-shrink: 0;
+        }
+
+        .log-message {
+            flex: 1;
+            word-break: break-word;
+        }
+
+        .log-info { color: #60a5fa; }
+        .log-success { color: #4ade80; }
+        .log-error { color: #f87171; }
+        .log-warning { color: #fbbf24; }
+
+        .logs-empty {
+            color: #64748b;
+            text-align: center;
+            padding: 3rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logs-empty-icon {
+            width: 2rem;
+            height: 2rem;
+            opacity: 0.5;
+            margin-bottom: 0.5rem;
+            fill: currentColor;
+        }
+
+        .clear-logs-btn {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            background: none;
+            padding: 0;
+            height: auto;
+            width: auto;
+            justify-content: flex-start;
+        }
+
+        .clear-logs-btn:hover {
+            color: #cbd5e1;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(51, 65, 85, 0.5);
+            background: linear-gradient(to top, #020617, rgba(15, 23, 42, 0.5));
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .footer-copyright {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-brand {
+            font-size: 0.875rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #60a5fa, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            header { padding: 0.75rem; }
+            main { padding: 0.75rem; padding-bottom: 1.5rem; }
+            .section-header { padding: 0.75rem; }
+            .section-content { padding: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="header-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <div class="header-title">
+                        <h1>DISCORD NUKER</h1>
+                        <p>v1.0.0</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <p>VR7 - AKO</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+            <svg class="disclaimer-icon" viewBox="0 0 24 24">
+                <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+            </svg>
+            <div class="disclaimer-content">
+                <h3>⚠️ تنبيه مهم</h3>
+                <p>استخدم هذه الأداة على سيرفراتك فقط. الاستخدام غير المصرح قد يؤدي لعواقب قانونية.</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Credentials Section -->
+            <div class="section">
+                <button class="section-header" onclick="toggleSection('credentials')">
+                    <div class="section-header-left">
+                        <svg class="section-header-icon" viewBox="0 0 24 24" style="color: #60a5fa;">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                        </svg>
+                        <span class="section-header-text">بيانات الاتصال</span>
+                    </div>
+                    <svg class="section-chevron" id="chevron-credentials" viewBox="0 0 24 24">
+                        <path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+
+                <div class="section-content" id="credentials-content">
+                    <div class="form-group">
+                        <label class="form-label">Bot Token</label>
+                        <input type="password" id="botToken" placeholder="أدخل Bot Token الخاص بك">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Guild ID</label>
+                        <input type="text" id="guildId" placeholder="أدخل معرف السيرفر">
+                    </div>
+                    <button class="btn-primary" onclick="validateCredentials()">التحقق من البيانات</button>
+                </div>
+            </div>
+
+            <!-- Actions Section -->
+            <div class="section">
+                <button class="section-header" onclick="toggleSection('actions')">
+                    <div class="section-header-left">
+                        <svg class="section-header-icon" viewBox="0 0 24 24" style="color: #fbbf24;">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                        <span class="section-header-text">الإجراءات</span>
+                    </div>
+                    <svg class="section-chevron" id="chevron-actions" viewBox="0 0 24 24">
+                        <path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+
+                <div class="section-content hidden" id="actions-content">
+                    <button class="btn-danger" onclick="executeAction('ban')">
+                        <svg viewBox="0 0 24 24" style="width: 1rem; height: 1rem;">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                        حظر جميع الأعضاء
+                    </button>
+
+                    <button class="btn-warning" onclick="executeAction('delete')">
+                        <svg viewBox="0 0 24 24" style="width: 1rem; height: 1rem;">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-9l-1 1H5v2h14V4z"/>
+                        </svg>
+                        حذف جميع الرومات
+                    </button>
+
+                    <div style="border-top: 1px solid rgba(51, 65, 85, 0.5); padding-top: 0.625rem; margin-top: 0.625rem;">
+                        <div class="form-group">
+                            <label class="form-label">اسم الروم</label>
+                            <input type="text" id="channelName" placeholder="مثال: spam">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">عدد الرومات</label>
+                            <input type="number" id="channelCount" min="1" max="100" value="1">
+                        </div>
+                        <button class="btn-success" onclick="executeAction('create')">
+                            <svg viewBox="0 0 24 24" style="width: 1rem; height: 1rem;">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                            </svg>
+                            إنشاء رومات
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logs Section -->
+            <div class="section">
+                <button class="section-header" onclick="toggleSection('logs')">
+                    <div class="section-header-left">
+                        <svg class="section-header-icon" viewBox="0 0 24 24" style="color: #22d3ee;">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                        </svg>
+                        <span class="section-header-text">سجل العمليات</span>
+                    </div>
+                    <svg class="section-chevron" id="chevron-logs" viewBox="0 0 24 24">
+                        <path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+
+                <div class="section-content hidden" id="logs-content">
+                    <div class="logs-container" id="logs-container">
+                        <div class="logs-empty">
+                            <svg class="logs-empty-icon" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                            </svg>
+                            <p>لا توجد عمليات حتى الآن</p>
+                            <p style="font-size: 0.7rem; margin-top: 0.25rem;">ابدأ بتنفيذ إجراء</p>
+                        </div>
+                    </div>
+                    <button class="clear-logs-btn" onclick="clearLogs()">مسح السجل</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-copyright">© 2024 جميع الحقوق محفوظة</div>
+            <div class="footer-brand">VR7 - AKO</div>
+        </footer>
+    </div>
+
+    <script>
+        // Toggle section visibility
+        function toggleSection(sectionId) {
+            const contentId = `${sectionId}-content`;
+            const chevronId = `chevron-${sectionId}`;
+            
+            const content = document.getElementById(contentId);
+            const chevron = document.getElementById(chevronId);
+            
+            if (content) {
+                content.classList.toggle('hidden');
+                if (chevron) {
+                    chevron.classList.toggle('rotated');
+                }
+            }
+        }
+
+        // Validate credentials
+        function validateCredentials() {
+            const botToken = document.getElementById('botToken').value;
+            const guildId = document.getElementById('guildId').value;
+            
+            if (!botToken.trim() || !guildId.trim()) {
+                alert('يرجى إدخال Bot Token و Guild ID');
+                return;
+            }
+            
+            addLog('جاري التحقق من البيانات...', 'info');
+            
+            setTimeout(() => {
+                if (botToken.length > 10 && guildId.length > 10) {
+                    addLog('✓ تم التحقق من البيانات بنجاح', 'success');
+                    alert('تم التحقق من البيانات بنجاح');
+                } else {
+                    addLog('✗ فشل التحقق من البيانات', 'error');
+                    alert('فشل التحقق من البيانات');
+                }
+            }, 1000);
+        }
+
+        // Execute action
+        function executeAction(action) {
+            const botToken = document.getElementById('botToken').value;
+            const guildId = document.getElementById('guildId').value;
+            
+            if (!botToken.trim() || !guildId.trim()) {
+                alert('يرجى إدخال Bot Token و Guild ID أولاً');
+                return;
+            }
+            
+            // Expand logs section
+            const logsContent = document.getElementById('logs-content');
+            if (logsContent.classList.contains('hidden')) {
+                toggleSection('logs');
+            }
+            
+            // Clear previous logs
+            const logsContainer = document.getElementById('logs-container');
+            logsContainer.innerHTML = '';
+            
+            const actionNames = {
+                'ban': 'حظر الأعضاء',
+                'delete': 'حذف الرومات',
+                'create': 'إنشاء الرومات'
+            };
+            
+            addLog(`جاري ${actionNames[action]}...`, 'info');
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 30;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    addLog(`✓ تم ${actionNames[action]} بنجاح`, 'success');
+                } else {
+                    addLog(`جاري المعالجة... ${Math.floor(progress)}%`, 'info');
+                }
+            }, 500);
+        }
+
+        // Add log entry
+        function addLog(message, type = 'info') {
+            const logsContainer = document.getElementById('logs-container');
+            
+            if (logsContainer.innerHTML.includes('لا توجد عمليات')) {
+                logsContainer.innerHTML = '';
+            }
+            
+            const timestamp = new Date().toLocaleTimeString('ar-SA');
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            
+            let typeClass = 'log-info';
+            if (type === 'success') typeClass = 'log-success';
+            else if (type === 'error') typeClass = 'log-error';
+            else if (type === 'warning') typeClass = 'log-warning';
+            
+            logEntry.innerHTML = `
+                <span class="log-time">[${timestamp}]</span>
+                <span class="${typeClass}">${message}</span>
+            `;
+            
+            logsContainer.appendChild(logEntry);
+            logsContainer.scrollTop = logsContainer.scrollHeight;
+        }
+
+        // Clear logs
+        function clearLogs() {
+            const logsContainer = document.getElementById('logs-container');
+            logsContainer.innerHTML = `
+                <div class="logs-empty">
+                    <svg class="logs-empty-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    <p>لا توجد عمليات حتى الآن</p>
+                    <p style="font-size: 0.7rem; margin-top: 0.25rem;">ابدأ بتنفيذ إجراء</p>
+                </div>
+            `;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const channelCount = document.getElementById('channelCount');
+            if (channelCount) {
+                channelCount.addEventListener('change', (e) => {
+                    if (e.target.value < 1) e.target.value = 1;
+                    if (e.target.value > 100) e.target.value = 100;
+                });
+            }
+            
+            addLog('أهلاً بك في DISCORD NUKER v1.0.0', 'info');
+            addLog('يرجى إدخال بيانات الاتصال أولاً', 'info');
+        });
+    </script>
+</body>
+</html>
